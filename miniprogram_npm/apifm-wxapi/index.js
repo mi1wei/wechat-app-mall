@@ -103,6 +103,7 @@ var merchantId = '0';
 
 var request = function request(url, needSubDomain, method, data) {
   var _url = API_BASE_URL + (needSubDomain ? '/' + subDomain : '') + url;
+  console.log("_url",_url,"data",data)
   var header = {
     'Content-Type': 'application/x-www-form-urlencoded'
   };
@@ -124,6 +125,109 @@ var request = function request(url, needSubDomain, method, data) {
     });
   });
 };
+
+// var request2 = function request(url, needSubDomain, method, data) {
+//   var _url = API_BASE_URL2 + url;
+//   console.log("_url",_url,"data",data)
+//   var header = {
+//     'Content-Type': 'application/x-www-form-urlencoded'
+//   };
+//   return new Promise(function (resolve, reject) {
+//     wx.request({
+//       url: _url,
+//       method: method,
+//       data: data,
+//       header: header,
+//       success: function success(request) {
+//         console.log("request",request)
+//         resolve(request.data);
+//       },
+//       fail: function fail(error) {
+//         console.log("fail",error)
+//         reject(error);
+//       },
+//       complete: function complete(aaa) {
+//         // 加载完成
+//       }
+//     });
+//   });
+// };
+
+var request2 = function request(url, needSubDomain, method, data) {
+  var _url = API_BASE_URL2 + url;
+  console.log("_url",_url,"data",data,"method",method)
+  
+  var header = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  };
+
+  if (data!=undefined && data.hasOwnProperty("token")){
+    header['Authorization']= data["token"]
+    delete data.token
+    // console.log("_url2",_url,"data.hasOwnProperty(token)","data",data)
+  }
+  // if(method == 'post'){
+  //   data = JSON.stringify(data)
+  // }
+  return new Promise(function (resolve, reject) {
+    wx.request({
+      url: _url,
+      method: method,
+      data: data,
+      header: header,
+      success: function success(request) {
+        console.log("request",request)
+        resolve(request.data);
+      },
+      fail: function fail(error) {
+        console.log("fail",error)
+        reject(error);
+      },
+      complete: function complete(aaa) {
+        // 加载完成
+      }
+    });
+  });
+};
+
+var request3 = function request(url, needSubDomain, method, data) {
+  var _url = API_BASE_URL2 + url;
+  console.log("_url",_url,"data",data,"method",method)
+  
+  var header = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  };
+
+  if (data!=undefined && data.hasOwnProperty("token")){
+    header['Authorization']= data["token"]
+    delete data.token
+    // console.log("_url2",_url,"data.hasOwnProperty(token)","data",data)
+  }
+  if(method == 'post'){
+    data = JSON.stringify(data)
+  }
+  return new Promise(function (resolve, reject) {
+    wx.request({
+      url: _url,
+      method: method,
+      data: data,
+      header: header,
+      success: function success(request) {
+        console.log("request",request)
+        resolve(request.data);
+      },
+      fail: function fail(error) {
+        console.log("fail",error)
+        reject(error);
+      },
+      complete: function complete(aaa) {
+        // 加载完成
+      }
+    });
+  });
+};
+
+var API_BASE_URL2 = 'http://172.21.208.150:8080';
 
 /**
  * 小程序的promise没有finally方法，自己扩展下
@@ -200,12 +304,16 @@ module.exports = (_module$exports = {
     return request('/score/sign/rules', true, 'get', {});
   },
   scoreSign: function scoreSign(token) {
-    return request('/score/sign', true, 'post', {
+    // return request('/score/sign', true, 'post', {
+    //   token: token
+    // });
+    return request2('/score/sign', true, 'post', {
       token: token
     });
   },
   scoreSignLogs: function scoreSignLogs(data) {
-    return request('/score/sign/logs', true, 'post', data);
+    // return request('/score/sign/logs', true, 'post', data);
+    return request2('/score/sign/logs', true, 'post', data);
   },
   scoreTodaySignedInfo: function scoreTodaySignedInfo(token) {
     return request('/score/today-signed', true, 'get', {
@@ -280,7 +388,10 @@ module.exports = (_module$exports = {
     });
   },
   checkToken: function checkToken(token) {
-    return request('/user/check-token', true, 'get', {
+    // return request('/user/check-token', true, 'get', {
+    //   token: token
+    // });
+    return request2('/user/check-token', true, 'get', {
       token: token
     });
   },
@@ -449,7 +560,8 @@ module.exports = (_module$exports = {
     return request('/user/wxapp/register/simple', true, 'post', data);
   },
   authorize: function authorize(data) {
-    return request('/user/wxapp/authorize', true, 'post', data);
+    // return request('/user/wxapp/authorize', true, 'post', data);
+    return request3('/user/wxapp/authorize', true, 'post', data);
   },
   ttAuthorize: function ttAuthorize(data) {
     return request('/user/tt/microapp/authorize', true, 'post', data);
@@ -461,10 +573,12 @@ module.exports = (_module$exports = {
     return request('/user/m/register', true, 'post', data);
   },
   banners: function banners(data) {
-    return request('/banner/list', true, 'get', data);
+    // return request('/banner/list', true, 'get', data);
+    return request2('/banner/list', true, 'get', data);
   },
   goodsCategory: function goodsCategory() {
-    return request('/shop/goods/category/all', true, 'get');
+    // return request('/shop/goods/category/all', true, 'get');
+    return request2('/shop/goods/category/all', true, 'get');
   },
   goodsCategoryV2: function goodsCategoryV2() {
     var shopId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -492,7 +606,8 @@ module.exports = (_module$exports = {
     if (shopIds) {
       data.shopId = shopIds;
     }
-    return request('/shop/goods/list/v2', true, 'post', data);
+    // return request('/shop/goods/list/v2', true, 'post', data);
+    return request2('/shop/goods/list/v2', true, 'post', JSON.stringify(data));
   },
   goodsDetail: function goodsDetail(id) {
     var token = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
@@ -609,10 +724,14 @@ module.exports = (_module$exports = {
     return request('/goods/seckill/grab', true, 'post', { token: token, goodsId: goodsId, seconds: seconds });
   },
   coupons: function coupons(data) {
-    return request('/discounts/coupons', true, 'get', data);
+    // return request('/discounts/coupons', true, 'get', data);
+    return request2('/discounts/coupons', true, 'get', data);
   },
   couponDetail: function couponDetail(id) {
-    return request('/discounts/detail', true, 'get', {
+    // return request('/discounts/detail', true, 'get', {
+    //   id: id
+    // });
+    return request2('/discounts/detail', true, 'get', {
       id: id
     });
   },
@@ -620,7 +739,8 @@ module.exports = (_module$exports = {
     return request('/discounts/statistics', true, 'get', { token: token });
   },
   myCoupons: function myCoupons(data) {
-    return request('/discounts/my', true, 'get', data);
+    // return request('/discounts/my', true, 'get', data);
+    return request2('/discounts/my', true, 'post', data);
   },
   mergeCouponsRules: function mergeCouponsRules() {
     return request('/discounts/merge/list', true, 'get');
@@ -629,7 +749,8 @@ module.exports = (_module$exports = {
     return request('/discounts/merge', true, 'post', data);
   },
   fetchCoupons: function fetchCoupons(data) {
-    return request('/discounts/fetch', true, 'post', data);
+    // return request('/discounts/fetch', true, 'post', data);
+    return request2('/discounts/fetch', true, 'post', data);
   },
   sendCoupons: function sendCoupons(data) {
     return request('/discounts/send', true, 'post', data);
@@ -808,7 +929,7 @@ module.exports = (_module$exports = {
     });
   },
   userDetail: function userDetail(token) {
-    return request('/user/detail', true, 'get', {
+    return request2('/user/detail', true, 'get', {
       token: token
     });
   },
@@ -828,7 +949,10 @@ module.exports = (_module$exports = {
     });
   },
   userAmount: function userAmount(token) {
-    return request('/user/amount', true, 'get', {
+    // return request('/user/amount', true, 'get', {
+    //   token: token
+    // });
+    return request2('/user/amount', true, 'get', {
       token: token
     });
   },
@@ -1251,7 +1375,10 @@ module.exports = (_module$exports = {
     return request('/comment/list', true, 'post', data);
   },
   modifyUserInfo: function modifyUserInfo(data) {
-    return request('/user/modify', true, 'post', data);
+    return request3('/user/modify', true, 'post', data);
+  },
+  addUserInfo: function addUserInfo(data) {
+    return request3('/user/add', true, 'post', data);
   },
   bindSaleman: function bindSaleman(data) {
     return request('/user/bindSaleman', true, 'post', data);
@@ -1558,42 +1685,58 @@ module.exports = (_module$exports = {
   shippingCarInfo: function shippingCarInfo(token) {
     var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
-    return request('/shopping-cart/info', true, 'get', {
+    // return request('/shopping-cart/info', true, 'get', {
+    //   token: token, type: type
+    // });
+    return request2('/shopping-cart/info', true, 'get', {
       token: token, type: type
     });
   },
   shippingCarInfoAddItem: function shippingCarInfoAddItem(token, goodsId, number, sku, addition) {
     var type = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : '';
 
-    return request('/shopping-cart/add', true, 'post', {
+    var data = {
       token: token,
       goodsId: goodsId,
       number: number,
       sku: sku && sku.length > 0 ? JSON.stringify(sku) : '',
       addition: addition && addition.length > 0 ? JSON.stringify(addition) : '',
       type: type
-    });
+    }
+    console.log("da",JSON.stringify(data))
+    // return request('/shopping-cart/add', true, 'post', data);
+    return request3('/shopping-cart/add', true, 'post', data);
   },
   shippingCarInfoModifyNumber: function shippingCarInfoModifyNumber(token, key, number) {
     var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
 
-    return request('/shopping-cart/modifyNumber', true, 'post', {
+    var data = {
       token: token, key: key, number: number, type: type
-    });
+    }
+    // return request('/shopping-cart/modifyNumber', true, 'post', data);
+    return request2('/shopping-cart/modifyNumber', true, 'post', JSON.stringify(data));
   },
   shippingCarInfoRemoveItem: function shippingCarInfoRemoveItem(token, key) {
     var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
-    return request('/shopping-cart/remove', true, 'post', {
+    // return request('/shopping-cart/remove', true, 'post', {
+    //   token: token, key: key, type: type
+    // });
+    var data = {
       token: token, key: key, type: type
-    });
+    }
+    return request2('/shopping-cart/remove', true, 'post', JSON.stringify(data));
   },
   shippingCartSelected: function shippingCartSelected(token, key, selected) {
     var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
 
-    return request('/shopping-cart/select', true, 'post', {
+    // return request('/shopping-cart/select', true, 'post', {
+    //   token: token, key: key, selected: selected, type: type
+    // });
+    var data = {
       token: token, key: key, selected: selected, type: type
-    });
+    }
+    return request2('/shopping-cart/select', true, 'post', JSON.stringify(data));
   },
   shippingCarInfoRemoveAll: function shippingCarInfoRemoveAll(token) {
     var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';

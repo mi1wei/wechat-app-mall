@@ -1,7 +1,7 @@
 module.exports = {
   version: '14.1.2',
   note: '多商家模式下分享出去以后没有选择商家', // 这个为版本描述，无需修改
-  subDomain: 'tz', // 此处改成你自己的专属域名。什么是专属域名？请看教程 https://www.it120.cc/help/qr6l4m.html
+  subDomain: '618c49283d4d70037438e0f95ce1baf5', // 此处改成你自己的专属域名。什么是专属域名？请看教程 https://www.it120.cc/help/qr6l4m.html
   merchantId: 951, // 商户ID，可在后台工厂设置-->商户信息查看
   sdkAppID: 1400450467, // 腾讯实时音视频应用编号，请看教程 https://www.it120.cc/help/nxoqsl.html
 }

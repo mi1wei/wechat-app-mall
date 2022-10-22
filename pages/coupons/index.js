@@ -178,7 +178,7 @@ Page({
     })
     WXAPI.myCoupons({
       token: wx.getStorageSync('token'),
-      status: 0
+      status: 1
     }).then(function (res) {
       wx.hideLoading({
         success: (res) => {},
@@ -206,7 +206,7 @@ Page({
     })
     WXAPI.myCoupons({
       token: wx.getStorageSync('token'),
-      status: '1,2,3'
+      status: 2
     }).then(function (res) {
       wx.hideLoading({
         success: (res) => {},
@@ -224,7 +224,7 @@ Page({
   },
   async touse(e) {
     const item = e.currentTarget.dataset.item
-    const res = await WXAPI.couponDetail(item.pid)
+    const res = await WXAPI.couponDetail(item.id)
     if (res.code != 0) {
       wx.showToast({
         title: res.msg,
@@ -232,14 +232,14 @@ Page({
       })
       return
     }
-    if (!res.data.couponRefs || res.data.couponRefs.length == 0) {
+    if (!res.data || res.data.length == 0) {
       wx.switchTab({
         url: "/pages/index/index"
       })
       return
     }
     let categoryId, goodsId
-    res.data.couponRefs.forEach(ele => {
+    res.data.forEach(ele => {
       if (ele.type == 0) {
         categoryId = ele.refId
       }
@@ -248,8 +248,12 @@ Page({
       }
     })
     if (categoryId) {
-      wx.navigateTo({
-        url: '/pages/goods/list?categoryId=' + categoryId,
+      // wx.navigateTo({
+      //   url: '/pages/goods/list?categoryId=' + categoryId,
+      // })
+      wx.setStorageSync("_categoryId", categoryId)
+      wx.switchTab({
+        url: '/pages/category/category',
       })
       return
     }

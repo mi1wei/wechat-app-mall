@@ -25,9 +25,9 @@ Page({
     })
     if (res.code == 0) {
       this.setData({
-        scoreSignLogs: res.data.result,
+        scoreSignLogs: res.data,
         formatter(day) {
-          const _log = res.data.result.find(ele => {
+          const _log = res.data.find(ele => {
             const year = day.date.getYear() + 1900
             let month = day.date.getMonth() + 1
             month = month + ''
@@ -50,25 +50,18 @@ Page({
   },
   async sign() {
     const res = await WXAPI.scoreSign(wx.getStorageSync('token'))
-    if (res.code == 10000) {
+    if (res.code == 0) {
       wx.showToast({
         title: '签到成功',
         icon: 'success'
       })
       this.scoreSignLogs()
       return
-    }
-    if (res.code != 0) {
-      wx.showToast({
-        title: res.msg,
-        icon: 'none'
-      })
     } else {
       wx.showToast({
-        title: '签到成功',
-        icon: 'success'
-      })
-      this.scoreSignLogs()
+          title: res.msg,
+          icon: 'none'
+        })
     }
   },
 })
