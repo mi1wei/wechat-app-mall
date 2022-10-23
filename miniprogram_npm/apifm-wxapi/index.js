@@ -607,7 +607,7 @@ module.exports = (_module$exports = {
       data.shopId = shopIds;
     }
     // return request('/shop/goods/list/v2', true, 'post', data);
-    return request2('/shop/goods/list/v2', true, 'post', JSON.stringify(data));
+    return request3('/shop/goods/list/v2', true, 'post', data);
   },
   goodsDetail: function goodsDetail(id) {
     var token = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';

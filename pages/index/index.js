@@ -123,7 +123,7 @@ Page({
     this.cmsCategories()
     // https://www.yuque.com/apifm/nu0f75/wg5t98
     WXAPI.goodsv2({
-      recommendStatus: 1
+      label: 1
     }).then(res => {
       if (res.code === 0){
         that.setData({
@@ -133,8 +133,8 @@ Page({
     })
     that.getCoupons()
     that.getNotice()
-    that.kanjiaGoods()
-    that.pingtuanGoods()
+    // that.kanjiaGoods()
+    // that.pingtuanGoods()
     this.adPosition()
     // 读取系统参数
     this.readConfigVal()
@@ -161,7 +161,7 @@ Page({
   async miaoshaGoods(){
     // https://www.yuque.com/apifm/nu0f75/wg5t98
     const res = await WXAPI.goodsv2({
-      miaosha: true
+      label: 2
     })
     if (res.code == 0) {
       res.data.result.forEach(ele => {
@@ -240,7 +240,7 @@ Page({
   },
   async getGoodsList(categoryId, append) {
     if (categoryId == 0) {
-      categoryId = "";
+      categoryId = 0;
     }
     wx.showLoading({
       "mask": true
