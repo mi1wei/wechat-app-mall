@@ -2,7 +2,7 @@
 
 <view class="list" wx:for="{{addressList}}" wx:key="id">
   <view class="aaa">
-    <van-cell custom-class="aaa" title="{{item.linkMan}} {{item.mobile}}" label="{{item.address}}" bind:click="selectTap" data-id="{{item.id}}" />
+    <van-cell custom-class="aaa" title="{{item.linkMan}} {{item.mobile}}" label="{{item.province}} {{item.city}} {{item.areas}} {{item.address}}" bind:click="selectTap" data-id="{{item.id}}" />
   </view>
   <van-icon name="records" size="40rpx" bind:click="editAddess" data-id="{{item.id}}" />
 </view>

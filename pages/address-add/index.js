@@ -9,6 +9,15 @@ Page({
     cIndex: 0,//选择的市下标
     areas: undefined,// 区县数数组
     aIndex: 0,//选择的区下标
+    region: ['全部', '全部', '全部'],
+    customItem: '全部'
+  },
+  bindRegionChange: function (e) {
+    console.log(JSON.stringify(e))
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      region: e.detail.value
+    })
   },
   async provinces(provinceId, cityId, districtId, streetId) {
     const res = await WXAPI.province()
@@ -152,50 +161,50 @@ Page({
     })
   },
   async bindSave() {
-    if (this.data.pIndex == 0 ) {
+    if (this.data.region[0]=='全部' ) {
       wx.showToast({
         title: '请选择省份',
         icon: 'none'
       })
       return
     }
-    if (this.data.cIndex == 0 ) {
+    if (this.data.region[1]=='全部' ) {
       wx.showToast({
         title: '请选择城市',
         icon: 'none'
       })
       return
     }
-    if (this.data.aIndex == 0 ) {
+    if (this.data.region[2]=='全部' ) {
       wx.showToast({
         title: '请选择区县',
         icon: 'none'
       })
       return
     }
-    const shipping_address_region_level = wx.getStorageSync('shipping_address_region_level')
-    if (shipping_address_region_level == 4) {
-      if (this.data.sIndex == 0 ) {
-        wx.showToast({
-          title: '请选择社区/街道',
-          icon: 'none'
-        })
-        return
-      }
-    }
+    // const shipping_address_region_level = wx.getStorageSync('shipping_address_region_level')
+    // if (shipping_address_region_level == 4) {
+    //   if (this.data.sIndex == 0 ) {
+    //     wx.showToast({
+    //       title: '请选择社区/街道',
+    //       icon: 'none'
+    //     })
+    //     return
+    //   }
+    // }
     
     const linkMan = this.data.linkMan;
     const address = this.data.address;
     const mobile = this.data.mobile;
-    if (this.data.shipping_address_gps == '1' && !this.data.addressData) {
-      wx.showToast({
-        title: '请选择定位',
-        icon: 'none',       
-      })
-      return
-    }
-    const latitude = this.data.addressData ? this.data.addressData.latitude : null
-    const longitude = this.data.addressData ? this.data.addressData.longitude : null
+    // if (this.data.shipping_address_gps == '1' && !this.data.addressData) {
+    //   wx.showToast({
+    //     title: '请选择定位',
+    //     icon: 'none',       
+    //   })
+    //   return
+    // }
+    // const latitude = this.data.addressData ? this.data.addressData.latitude : null
+    // const longitude = this.data.addressData ? this.data.addressData.longitude : null
     if (!linkMan){
       wx.showToast({
         title: '请填写联系人姓名',
@@ -212,24 +221,30 @@ Page({
     }
     const postData = {
       token: wx.getStorageSync('token'),
-      linkMan: linkMan,
-      address: address,
-      mobile: mobile,
-      isDefault: 'true'
+      data: {
+        id:"",
+        province: this.data.region[0],
+        city: this.data.region[1],
+        areas: this.data.region[2],
+        linkMan: linkMan,
+        address: address,
+        mobile: mobile,
+        isDefault: true
+      },
     }
-    if (this.data.shipping_address_gps == '1' && !latitude){
-      wx.showToast({
-        title: '请选择定位',
-        icon: 'none',       
-      })
-      return
-    }
-    if (latitude) {
-      postData.latitude = latitude
-    }
-    if (longitude) {
-      postData.longitude = longitude
-    }
+    // if (this.data.shipping_address_gps == '1' && !latitude){
+    //   wx.showToast({
+    //     title: '请选择定位',
+    //     icon: 'none',       
+    //   })
+    //   return
+    // }
+    // if (latitude) {
+    //   postData.latitude = latitude
+    // }
+    // if (longitude) {
+    //   postData.longitude = longitude
+    // }
     if (!address){
       wx.showToast({
         title: '请填写详细地址',
@@ -252,7 +267,7 @@ Page({
     }    
     let apiResult
     if (this.data.id) {
-      postData.id = this.data.id
+      postData.data.id = this.data.id
       apiResult = await WXAPI.updateAddress(postData)
     } else {
       apiResult = await WXAPI.addAddress(postData)
@@ -277,9 +292,9 @@ Page({
       if (res.code == 0) {
         this.setData({
           id: e.id,
-          ...res.data.info
+          ...res.data
         })
-        this.provinces(res.data.info.provinceId, res.data.info.cityId, res.data.info.districtId, res.data.info.streetId)
+        // this.provinces(res.data.info.provinceId, res.data.info.cityId, res.data.info.districtId, res.data.info.streetId)
       } else {
         wx.showModal({
           title: '错误',
@@ -288,7 +303,7 @@ Page({
         })
       }
     } else {
-      this.provinces()
+      // this.provinces()
       wx.getClipboardData({
         success (res){
           if (res.data) {
@@ -317,7 +332,7 @@ Page({
             address: res.address,
           }
         })
-        this.provinces(res.provinceCode, res.cityCode, res.countyCode)
+        // this.provinces(res.provinceCode, res.cityCode, res.countyCode)
       }
     })
   },

@@ -2,7 +2,12 @@
   <van-cell title="一键获取微信收货地址" size="large" is-link bind:click="readFromWx" />
   <view class="space"></view>
 </block>
-<picker bindchange="provinceChange" value="{{pIndex}}" range="{{provinces}}" range-key="name">
+<view class="section">
+  <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+    <van-cell title="省/市/区"  value="{{region[0]}}/{{region[1]}}/{{region[2]}}" is-link />
+  </picker>
+</view>
+<!-- <picker bindchange="provinceChange" value="{{pIndex}}" range="{{provinces}}" range-key="name">
   <van-cell title="省份" value="{{provinces[pIndex].name}}" is-link />
 </picker>
 <picker wx:if="{{cities}}" bindchange="cityChange" value="{{cIndex}}" range="{{cities}}" range-key="name">
@@ -16,7 +21,7 @@
 </picker>
 <picker wx:if="{{communities}}" bindchange="communityChange" value="{{ccIndex}}" range="{{communities}}" range-key="name">
   <van-cell title="社区/村委会" value="{{communities[ccIndex].name}}" is-link />
-</picker>
+</picker> -->
 <van-field
   label="姓名"
   model:value="{{ linkMan }}"

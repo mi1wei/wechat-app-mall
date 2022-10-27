@@ -787,19 +787,28 @@ module.exports = (_module$exports = {
     });
   },
   addAddress: function addAddress(data) {
-    return request('/user/shipping-address/add', true, 'post', data);
+    // return request('/user/shipping-address/add', true, 'post', data);
+    return request3('/user/shipping-address/add', true, 'post', data);
   },
   updateAddress: function updateAddress(data) {
-    return request('/user/shipping-address/update', true, 'post', data);
+    // return request('/user/shipping-address/update', true, 'post', data);
+    return request3('/user/shipping-address/update', true, 'post', data);
   },
   deleteAddress: function deleteAddress(token, id) {
-    return request('/user/shipping-address/delete', true, 'post', {
+    // return request('/user/shipping-address/delete', true, 'post', {
+    //   id: id,
+    //   token: token
+    // });
+    return request3('/user/shipping-address/delete', true, 'post', {
       id: id,
       token: token
     });
   },
   queryAddress: function queryAddress(token) {
-    return request('/user/shipping-address/list', true, 'get', {
+    // return request('/user/shipping-address/list', true, 'get', {
+    //   token: token
+    // });
+    return request2('/user/shipping-address/list', true, 'get', {
       token: token
     });
   },
@@ -812,7 +821,11 @@ module.exports = (_module$exports = {
     });
   },
   addressDetail: function addressDetail(token, id) {
-    return request('/user/shipping-address/detail/v2', true, 'get', {
+    // return request('/user/shipping-address/detail/v2', true, 'get', {
+    //   id: id,
+    //   token: token
+    // });
+    return request2('/user/shipping-address/detail/v2', true, 'get', {
       id: id,
       token: token
     });
