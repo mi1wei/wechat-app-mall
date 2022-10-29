@@ -200,12 +200,12 @@ module.exports = (_module$exports = {
     return request('/score/sign/rules', true, 'get', {});
   },
   scoreSign: function scoreSign(token) {
-    return request('/score/sign', true, 'post', {
+    return request2('/score/sign', true, 'post', {
       token: token
     });
   },
   scoreSignLogs: function scoreSignLogs(data) {
-    return request('/score/sign/logs', true, 'post', data);
+    return request2('/score/sign/logs', true, 'post', data);
   },
   scoreTodaySignedInfo: function scoreTodaySignedInfo(token) {
     return request('/score/today-signed', true, 'get', {
@@ -609,10 +609,10 @@ module.exports = (_module$exports = {
     return request('/goods/seckill/grab', true, 'post', { token: token, goodsId: goodsId, seconds: seconds });
   },
   coupons: function coupons(data) {
-    return request('/discounts/coupons', true, 'get', data);
+    return request2('/discounts/coupons', true, 'get', data);
   },
   couponDetail: function couponDetail(id) {
-    return request('/discounts/detail', true, 'get', {
+    return request2('/discounts/detail', true, 'get', {
       id: id
     });
   },
@@ -620,7 +620,7 @@ module.exports = (_module$exports = {
     return request('/discounts/statistics', true, 'get', { token: token });
   },
   myCoupons: function myCoupons(data) {
-    return request('/discounts/my', true, 'get', data);
+    return request2('/discounts/my', true, 'get', data);
   },
   mergeCouponsRules: function mergeCouponsRules() {
     return request('/discounts/merge/list', true, 'get');
@@ -629,7 +629,7 @@ module.exports = (_module$exports = {
     return request('/discounts/merge', true, 'post', data);
   },
   fetchCoupons: function fetchCoupons(data) {
-    return request('/discounts/fetch', true, 'post', data);
+    return request2('/discounts/fetch', true, 'post', data);
   },
   sendCoupons: function sendCoupons(data) {
     return request('/discounts/send', true, 'post', data);
@@ -666,19 +666,19 @@ module.exports = (_module$exports = {
     });
   },
   addAddress: function addAddress(data) {
-    return request('/user/shipping-address/add', true, 'post', data);
+    return request3('/user/shipping-address/add', true, 'post', data);
   },
   updateAddress: function updateAddress(data) {
-    return request('/user/shipping-address/update', true, 'post', data);
+    return request3('/user/shipping-address/update', true, 'post', data);
   },
   deleteAddress: function deleteAddress(token, id) {
-    return request('/user/shipping-address/delete', true, 'post', {
+    return request3('/user/shipping-address/delete', true, 'post', {
       id: id,
       token: token
     });
   },
   queryAddress: function queryAddress(token) {
-    return request('/user/shipping-address/list', true, 'get', {
+    return request2('/user/shipping-address/list', true, 'get', {
       token: token
     });
   },
@@ -691,7 +691,7 @@ module.exports = (_module$exports = {
     });
   },
   addressDetail: function addressDetail(token, id) {
-    return request('/user/shipping-address/detail/v2', true, 'get', {
+    return request2('/user/shipping-address/detail/v2', true, 'get', {
       id: id,
       token: token
     });
@@ -828,7 +828,7 @@ module.exports = (_module$exports = {
     });
   },
   userAmount: function userAmount(token) {
-    return request('/user/amount', true, 'get', {
+    return request2('/user/amount', true, 'get', {
       token: token
     });
   },
