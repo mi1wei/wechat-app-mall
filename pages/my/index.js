@@ -194,7 +194,8 @@ Page({
       province: userInfo.province,
       gender: userInfo.gender,
     }
-    const res = await WXAPI.modifyUserInfo(postData)
+    // const res = await WXAPI.modifyUserInfo(postData)
+    const res = await WXAPI.addUserInfo(postData)
     if (res.code != 0) {
       wx.showToast({
         title: res.msg,
