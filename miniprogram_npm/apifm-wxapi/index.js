@@ -100,12 +100,45 @@ var API_BASE_URL = 'https://api.it120.cc';
 // var API_BASE_URL = 'http://127.0.0.1:8081';
 var subDomain = '-';
 var merchantId = '0';
+var API_BASE_URL2 = 'https://www.itmwy.top';
 
 var request = function request(url, needSubDomain, method, data) {
   var _url = API_BASE_URL + (needSubDomain ? '/' + subDomain : '') + url;
   var header = {
     'Content-Type': 'application/x-www-form-urlencoded'
   };
+  return new Promise(function (resolve, reject) {
+    wx.request({
+      url: _url,
+      method: method,
+      data: data,
+      header: header,
+      success: function success(request) {
+        resolve(request.data);
+      },
+      fail: function fail(error) {
+        reject(error);
+      },
+      complete: function complete(aaa) {
+        // 加载完成
+      }
+    });
+  });
+};
+
+var request2 = function request(url, needSubDomain, method, data, flag) {
+  var _url = API_BASE_URL2 + url;
+  var header = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  };
+
+  if (data!=undefined && data.hasOwnProperty("token")){
+    header['Authorization']= data["token"]
+    delete data.token
+  }
+  if(method == 'post' && flag){
+    data = JSON.stringify(data)
+  }
   return new Promise(function (resolve, reject) {
     wx.request({
       url: _url,
@@ -280,7 +313,7 @@ module.exports = (_module$exports = {
     });
   },
   checkToken: function checkToken(token) {
-    return request('/user/check-token', true, 'get', {
+    return request2('/user/check-token', true, 'get', {
       token: token
     });
   },
@@ -449,7 +482,7 @@ module.exports = (_module$exports = {
     return request('/user/wxapp/register/simple', true, 'post', data);
   },
   authorize: function authorize(data) {
-    return request('/user/wxapp/authorize', true, 'post', data);
+    return request2('/user/wxapp/authorize', true, 'post', data, true);
   },
   ttAuthorize: function ttAuthorize(data) {
     return request('/user/tt/microapp/authorize', true, 'post', data);
@@ -461,10 +494,10 @@ module.exports = (_module$exports = {
     return request('/user/m/register', true, 'post', data);
   },
   banners: function banners(data) {
-    return request('/banner/list', true, 'get', data);
+    return request2('/banner/list', true, 'get', data);
   },
   goodsCategory: function goodsCategory() {
-    return request('/shop/goods/category/all', true, 'get');
+    return request2('/shop/goods/category/all', true, 'get');
   },
   goodsCategoryV2: function goodsCategoryV2() {
     var shopId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -492,12 +525,12 @@ module.exports = (_module$exports = {
     if (shopIds) {
       data.shopId = shopIds;
     }
-    return request('/shop/goods/list/v2', true, 'post', data);
+    return request2('/shop/goods/list/v2', true, 'post', data, true);
   },
   goodsDetail: function goodsDetail(id) {
     var token = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
-    return request('/shop/goods/detail', true, 'get', {
+    return request2('/shop/goods/detail', true, 'get', {
       id: id, token: token
     });
   },
@@ -808,7 +841,7 @@ module.exports = (_module$exports = {
     });
   },
   userDetail: function userDetail(token) {
-    return request('/user/detail', true, 'get', {
+    return request2('/user/detail', true, 'get', {
       token: token
     });
   },
@@ -1251,7 +1284,10 @@ module.exports = (_module$exports = {
     return request('/comment/list', true, 'post', data);
   },
   modifyUserInfo: function modifyUserInfo(data) {
-    return request('/user/modify', true, 'post', data);
+    return request2('/user/modify', true, 'post', data, true);
+  },
+  addUserInfo: function addUserInfo(data) {
+    return request2('/user/add', true, 'post', data, true);
   },
   bindSaleman: function bindSaleman(data) {
     return request('/user/bindSaleman', true, 'post', data);
@@ -1558,42 +1594,42 @@ module.exports = (_module$exports = {
   shippingCarInfo: function shippingCarInfo(token) {
     var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
-    return request('/shopping-cart/info', true, 'get', {
+    return request2('/shopping-cart/info', true, 'get', {
       token: token, type: type
     });
   },
   shippingCarInfoAddItem: function shippingCarInfoAddItem(token, goodsId, number, sku, addition) {
     var type = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : '';
 
-    return request('/shopping-cart/add', true, 'post', {
+    return request2('/shopping-cart/add', true, 'post', {
       token: token,
       goodsId: goodsId,
       number: number,
       sku: sku && sku.length > 0 ? JSON.stringify(sku) : '',
       addition: addition && addition.length > 0 ? JSON.stringify(addition) : '',
       type: type
-    });
+    }, true);
   },
   shippingCarInfoModifyNumber: function shippingCarInfoModifyNumber(token, key, number) {
     var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
 
-    return request('/shopping-cart/modifyNumber', true, 'post', {
+    return request2('/shopping-cart/modifyNumber', true, 'post', {
       token: token, key: key, number: number, type: type
-    });
+    }, true);
   },
   shippingCarInfoRemoveItem: function shippingCarInfoRemoveItem(token, key) {
     var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
-    return request('/shopping-cart/remove', true, 'post', {
+    return request2('/shopping-cart/remove', true, 'post', {
       token: token, key: key, type: type
-    });
+    }, true);
   },
   shippingCartSelected: function shippingCartSelected(token, key, selected) {
     var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
 
-    return request('/shopping-cart/select', true, 'post', {
+    return request2('/shopping-cart/select', true, 'post', {
       token: token, key: key, selected: selected, type: type
-    });
+    }, true);
   },
   shippingCarInfoRemoveAll: function shippingCarInfoRemoveAll(token) {
     var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';

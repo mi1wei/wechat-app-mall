@@ -49,8 +49,6 @@ Page({
     }
     if (this.data.shopCarType == 0) { //自营购物车
       var res = await WXAPI.shippingCarInfo(token)
-    } else if (this.data.shopCarType == 1) { //云货架购物车
-      var res = await WXAPI.jdvopCartInfo(token)
     }
     if (res.code == 0) {
       if (this.data.shopCarType == 0) //自营商品

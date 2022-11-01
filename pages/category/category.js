@@ -91,9 +91,9 @@ Page({
     }
     // https://www.yuque.com/apifm/nu0f75/wg5t98
     const res = await WXAPI.goodsv2({
-      categoryId,
+      categoryId: categoryId,
       page: this.data.page,
-      pageSize: this.data.pageSize
+      pageSize: 10
     })
     wx.hideLoading()
     if (res.code == 700) {

@@ -120,10 +120,8 @@ Page({
     })
     this.initBanners()
     this.categories()
-    this.cmsCategories()
-    // https://www.yuque.com/apifm/nu0f75/wg5t98
     WXAPI.goodsv2({
-      recommendStatus: 1
+      label: 1
     }).then(res => {
       if (res.code === 0){
         that.setData({
@@ -133,8 +131,6 @@ Page({
     })
     that.getCoupons()
     that.getNotice()
-    that.kanjiaGoods()
-    that.pingtuanGoods()
     this.adPosition()
     // 读取系统参数
     this.readConfigVal()
@@ -161,7 +157,7 @@ Page({
   async miaoshaGoods(){
     // https://www.yuque.com/apifm/nu0f75/wg5t98
     const res = await WXAPI.goodsv2({
-      miaosha: true
+      label: 2
     })
     if (res.code == 0) {
       res.data.result.forEach(ele => {
@@ -207,7 +203,6 @@ Page({
     })
     // 获取购物车数据，显示TabBarBadge
     TOOLS.showTabBarBadge()
-    this.goodsDynamic()
     this.miaoshaGoods()
     const refreshIndex = wx.getStorageSync('refreshIndex')
     if (refreshIndex) {
@@ -239,9 +234,6 @@ Page({
     this.getGoodsList(0);
   },
   async getGoodsList(categoryId, append) {
-    if (categoryId == 0) {
-      categoryId = "";
-    }
     wx.showLoading({
       "mask": true
     })
@@ -377,12 +369,12 @@ Page({
         adPositionIndexPop: res.data
       })
     }
-    res = await WXAPI.adPosition('index-live-pic')
-    if (res.code == 0) {
-      this.setData({
-        adPositionIndexLivePic: res.data
-      })
-    }
+    // res = await WXAPI.adPosition('index-live-pic')
+    // if (res.code == 0) {
+    //   this.setData({
+    //     adPositionIndexLivePic: res.data
+    //   })
+    // }
   },
   clickAdPositionIndexLive() {
     if (!this.data.adPositionIndexLivePic || !this.data.adPositionIndexLivePic.url) {
