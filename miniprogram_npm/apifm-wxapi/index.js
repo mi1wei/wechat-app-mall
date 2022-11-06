@@ -684,7 +684,7 @@ module.exports = (_module$exports = {
     return request('/discounts/share/fetch', true, 'post', { token: token, id: id, shareToken: shareToken });
   },
   noticeList: function noticeList(data) {
-    return request('/notice/list', true, 'post', data);
+    return request2('/notice/list', true, 'post', data, true);
   },
   noticeLastOne: function noticeLastOne() {
     var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -694,7 +694,7 @@ module.exports = (_module$exports = {
     });
   },
   noticeDetail: function noticeDetail(id) {
-    return request('/notice/detail', true, 'get', {
+    return request2('/notice/detail', true, 'get', {
       id: id
     });
   },
