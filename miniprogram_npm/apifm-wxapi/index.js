@@ -1849,7 +1849,7 @@ module.exports = (_module$exports = {
     return request('/user/paypwd/reset', true, 'post', { mobile: mobile, code: code, pwd: pwd });
   },
   adPosition: function adPosition(key) {
-    return request('/site/adPosition/info', true, 'get', { key: key });
+    return request2('/site/adPosition/info', true, 'get', { key: key });
   },
   adPositionBatch: function adPositionBatch(keys) {
     return request('/site/adPosition/batch', true, 'get', { keys: keys });
