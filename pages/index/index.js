@@ -234,6 +234,9 @@ Page({
     this.getGoodsList(0);
   },
   async getGoodsList(categoryId, append) {
+    if (categoryId == 0) {
+      categoryId = "";
+    }
     wx.showLoading({
       "mask": true
     })
