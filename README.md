@@ -67,16 +67,8 @@ https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=189
 
 ## pages
 ### lw
-- /site/adPosition/info
-- /discounts/fetch
-- /discounts/my
-- /discounts/coupons
-- /discounts/detail
-- /score/sign
-- /score/sign/logs
-- /user/shipping-address/add
-- /user/shipping-address/list
-- /user/shipping-address/detail/v2
-- /user/shipping-address/update
-- /user/shipping-address/delete
-- /user/amount
+- pages/coupons/index
+- pages/score/index
+- pages/sign/index
+- pages/select-address/index
+- pages/address-add/index
