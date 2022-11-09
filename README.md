@@ -64,3 +64,19 @@ https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=189
 - 开发工具里面上传代码提交微信审核
 - 审核通过后，小程序后台去发布新版本即可
 - 用户无需重新扫码，关闭小程序重新打开就是新版本了
+
+## pages
+### lw
+- /site/adPosition/info
+- /discounts/fetch
+- /discounts/my
+- /discounts/coupons
+- /discounts/detail
+- /score/sign
+- /score/sign/logs
+- /user/shipping-address/add
+- /user/shipping-address/list
+- /user/shipping-address/detail/v2
+- /user/shipping-address/update
+- /user/shipping-address/delete
+- /user/amount
