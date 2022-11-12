@@ -653,7 +653,7 @@ module.exports = (_module$exports = {
     return request('/discounts/statistics', true, 'get', { token: token });
   },
   myCoupons: function myCoupons(data) {
-    return request2('/discounts/my', true, 'get', data);
+    return request2('/discounts/my', true, 'post', data);
   },
   mergeCouponsRules: function mergeCouponsRules() {
     return request('/discounts/merge/list', true, 'get');
@@ -699,16 +699,16 @@ module.exports = (_module$exports = {
     });
   },
   addAddress: function addAddress(data) {
-    return request3('/user/shipping-address/add', true, 'post', data);
+    return request2('/user/shipping-address/add', true, 'post', data, true);
   },
   updateAddress: function updateAddress(data) {
-    return request3('/user/shipping-address/update', true, 'post', data);
+    return request2('/user/shipping-address/update', true, 'post', data, true);
   },
   deleteAddress: function deleteAddress(token, id) {
-    return request3('/user/shipping-address/delete', true, 'post', {
+    return request2('/user/shipping-address/delete', true, 'post', {
       id: id,
       token: token
-    });
+    }, true);
   },
   queryAddress: function queryAddress(token) {
     return request2('/user/shipping-address/list', true, 'get', {
