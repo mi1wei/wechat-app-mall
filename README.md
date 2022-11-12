@@ -64,3 +64,11 @@ https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=189
 - 开发工具里面上传代码提交微信审核
 - 审核通过后，小程序后台去发布新版本即可
 - 用户无需重新扫码，关闭小程序重新打开就是新版本了
+
+## pages
+### lw
+- pages/coupons/index
+- pages/score/index
+- pages/sign/index
+- pages/select-address/index
+- pages/address-add/index
